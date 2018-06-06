@@ -36,9 +36,10 @@ set(gRPC_INSTALL_INCLUDEDIR "include" CACHE STRING "Installation directory for h
 set(gRPC_INSTALL_CMAKEDIR "lib/cmake/${PACKAGE_NAME}" CACHE STRING "Installation directory for cmake config files")
 
 # Options
-option(gRPC_BUILD_TESTS "Build tests" OFF)
-option(gRPC_BUILD_CODEGEN "Build codegen" ON)
-
+#option(gRPC_BUILD_TESTS "Build tests" OFF)
+#option(gRPC_BUILD_CODEGEN "Build codegen" ON)
+set(gRPC_BUILD_TESTS ON)
+set(gRPC_BUILD_CODEGEN ON)
 set(gRPC_INSTALL_default ON)
 if (NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
   # Disable gRPC_INSTALL by default if building as a submodule
@@ -742,8 +743,214 @@ target_link_libraries(alts_test_util
 
 
 endif (gRPC_BUILD_TESTS)
-
+set(myHeaders
+        include/grpc++/alarm.h
+        include/grpc++/channel.h
+        include/grpc++/client_context.h
+        include/grpc++/completion_queue.h
+        include/grpc++/create_channel.h
+        include/grpc++/create_channel_posix.h
+        include/grpc++/ext/health_check_service_server_builder_option.h
+        include/grpc++/generic/async_generic_service.h
+        include/grpc++/generic/generic_stub.h
+        include/grpc++/grpc++.h
+        include/grpc++/health_check_service_interface.h
+        include/grpc++/impl/call.h
+        include/grpc++/impl/channel_argument_option.h
+        include/grpc++/impl/client_unary_call.h
+        include/grpc++/impl/codegen/core_codegen.h
+        include/grpc++/impl/grpc_library.h
+        include/grpc++/impl/method_handler_impl.h
+        include/grpc++/impl/rpc_method.h
+        include/grpc++/impl/rpc_service_method.h
+        include/grpc++/impl/serialization_traits.h
+        include/grpc++/impl/server_builder_option.h
+        include/grpc++/impl/server_builder_plugin.h
+        include/grpc++/impl/server_initializer.h
+        include/grpc++/impl/service_type.h
+        include/grpc++/resource_quota.h
+        include/grpc++/security/auth_context.h
+        include/grpc++/security/auth_metadata_processor.h
+        include/grpc++/security/credentials.h
+        include/grpc++/security/server_credentials.h
+        include/grpc++/server.h
+        include/grpc++/server_builder.h
+        include/grpc++/server_context.h
+        include/grpc++/server_posix.h
+        include/grpc++/support/async_stream.h
+        include/grpc++/support/async_unary_call.h
+        include/grpc++/support/byte_buffer.h
+        include/grpc++/support/channel_arguments.h
+        include/grpc++/support/config.h
+        include/grpc++/support/slice.h
+        include/grpc++/support/status.h
+        include/grpc++/support/status_code_enum.h
+        include/grpc++/support/string_ref.h
+        include/grpc++/support/stub_options.h
+        include/grpc++/support/sync_stream.h
+        include/grpc++/support/time.h
+        include/grpcpp/alarm.h
+        include/grpcpp/channel.h
+        include/grpcpp/client_context.h
+        include/grpcpp/completion_queue.h
+        include/grpcpp/create_channel.h
+        include/grpcpp/create_channel_posix.h
+        include/grpcpp/ext/health_check_service_server_builder_option.h
+        include/grpcpp/generic/async_generic_service.h
+        include/grpcpp/generic/generic_stub.h
+        include/grpcpp/grpcpp.h
+        include/grpcpp/health_check_service_interface.h
+        include/grpcpp/impl/call.h
+        include/grpcpp/impl/channel_argument_option.h
+        include/grpcpp/impl/client_unary_call.h
+        include/grpcpp/impl/codegen/core_codegen.h
+        include/grpcpp/impl/grpc_library.h
+        include/grpcpp/impl/method_handler_impl.h
+        include/grpcpp/impl/rpc_method.h
+        include/grpcpp/impl/rpc_service_method.h
+        include/grpcpp/impl/serialization_traits.h
+        include/grpcpp/impl/server_builder_option.h
+        include/grpcpp/impl/server_builder_plugin.h
+        include/grpcpp/impl/server_initializer.h
+        include/grpcpp/impl/service_type.h
+        include/grpcpp/resource_quota.h
+        include/grpcpp/security/auth_context.h
+        include/grpcpp/security/auth_metadata_processor.h
+        include/grpcpp/security/credentials.h
+        include/grpcpp/security/server_credentials.h
+        include/grpcpp/server.h
+        include/grpcpp/server_builder.h
+        include/grpcpp/server_context.h
+        include/grpcpp/server_posix.h
+        include/grpcpp/support/async_stream.h
+        include/grpcpp/support/async_unary_call.h
+        include/grpcpp/support/byte_buffer.h
+        include/grpcpp/support/channel_arguments.h
+        include/grpcpp/support/config.h
+        include/grpcpp/support/slice.h
+        include/grpcpp/support/status.h
+        include/grpcpp/support/status_code_enum.h
+        include/grpcpp/support/string_ref.h
+        include/grpcpp/support/stub_options.h
+        include/grpcpp/support/sync_stream.h
+        include/grpcpp/support/time.h
+        include/grpc/support/alloc.h
+        include/grpc/support/atm.h
+        include/grpc/support/atm_gcc_atomic.h
+        include/grpc/support/atm_gcc_sync.h
+        include/grpc/support/atm_windows.h
+        include/grpc/support/cpu.h
+        include/grpc/support/log.h
+        include/grpc/support/log_windows.h
+        include/grpc/support/port_platform.h
+        include/grpc/support/string_util.h
+        include/grpc/support/sync.h
+        include/grpc/support/sync_custom.h
+        include/grpc/support/sync_generic.h
+        include/grpc/support/sync_posix.h
+        include/grpc/support/sync_windows.h
+        include/grpc/support/thd_id.h
+        include/grpc/support/time.h
+        include/grpc/impl/codegen/atm.h
+        include/grpc/impl/codegen/atm_gcc_atomic.h
+        include/grpc/impl/codegen/atm_gcc_sync.h
+        include/grpc/impl/codegen/atm_windows.h
+        include/grpc/impl/codegen/fork.h
+        include/grpc/impl/codegen/gpr_slice.h
+        include/grpc/impl/codegen/gpr_types.h
+        include/grpc/impl/codegen/port_platform.h
+        include/grpc/impl/codegen/sync.h
+        include/grpc/impl/codegen/sync_custom.h
+        include/grpc/impl/codegen/sync_generic.h
+        include/grpc/impl/codegen/sync_posix.h
+        include/grpc/impl/codegen/sync_windows.h
+        include/grpc/byte_buffer.h
+        include/grpc/byte_buffer_reader.h
+        include/grpc/compression.h
+        include/grpc/fork.h
+        include/grpc/grpc.h
+        include/grpc/grpc_posix.h
+        include/grpc/grpc_security_constants.h
+        include/grpc/load_reporting.h
+        include/grpc/slice.h
+        include/grpc/slice_buffer.h
+        include/grpc/status.h
+        include/grpc/support/workaround_list.h
+        include/grpc/impl/codegen/byte_buffer.h
+        include/grpc/impl/codegen/byte_buffer_reader.h
+        include/grpc/impl/codegen/compression_types.h
+        include/grpc/impl/codegen/connectivity_state.h
+        include/grpc/impl/codegen/grpc_types.h
+        include/grpc/impl/codegen/propagation_bits.h
+        include/grpc/impl/codegen/slice.h
+        include/grpc/impl/codegen/status.h
+        include/grpc++/impl/codegen/async_stream.h
+        include/grpc++/impl/codegen/async_unary_call.h
+        include/grpc++/impl/codegen/byte_buffer.h
+        include/grpc++/impl/codegen/call.h
+        include/grpc++/impl/codegen/call_hook.h
+        include/grpc++/impl/codegen/channel_interface.h
+        include/grpc++/impl/codegen/client_context.h
+        include/grpc++/impl/codegen/client_unary_call.h
+        include/grpc++/impl/codegen/completion_queue.h
+        include/grpc++/impl/codegen/completion_queue_tag.h
+        include/grpc++/impl/codegen/config.h
+        include/grpc++/impl/codegen/core_codegen_interface.h
+        include/grpc++/impl/codegen/create_auth_context.h
+        include/grpc++/impl/codegen/grpc_library.h
+        include/grpc++/impl/codegen/metadata_map.h
+        include/grpc++/impl/codegen/method_handler_impl.h
+        include/grpc++/impl/codegen/rpc_method.h
+        include/grpc++/impl/codegen/rpc_service_method.h
+        include/grpc++/impl/codegen/security/auth_context.h
+        include/grpc++/impl/codegen/serialization_traits.h
+        include/grpc++/impl/codegen/server_context.h
+        include/grpc++/impl/codegen/server_interface.h
+        include/grpc++/impl/codegen/service_type.h
+        include/grpc++/impl/codegen/slice.h
+        include/grpc++/impl/codegen/status.h
+        include/grpc++/impl/codegen/status_code_enum.h
+        include/grpc++/impl/codegen/string_ref.h
+        include/grpc++/impl/codegen/stub_options.h
+        include/grpc++/impl/codegen/sync_stream.h
+        include/grpc++/impl/codegen/time.h
+        include/grpcpp/impl/codegen/async_stream.h
+        include/grpcpp/impl/codegen/async_unary_call.h
+        include/grpcpp/impl/codegen/byte_buffer.h
+        include/grpcpp/impl/codegen/call.h
+        include/grpcpp/impl/codegen/call_hook.h
+        include/grpcpp/impl/codegen/channel_interface.h
+        include/grpcpp/impl/codegen/client_context.h
+        include/grpcpp/impl/codegen/client_unary_call.h
+        include/grpcpp/impl/codegen/completion_queue.h
+        include/grpcpp/impl/codegen/completion_queue_tag.h
+        include/grpcpp/impl/codegen/config.h
+        include/grpcpp/impl/codegen/core_codegen_interface.h
+        include/grpcpp/impl/codegen/create_auth_context.h
+        include/grpcpp/impl/codegen/grpc_library.h
+        include/grpcpp/impl/codegen/metadata_map.h
+        include/grpcpp/impl/codegen/method_handler_impl.h
+        include/grpcpp/impl/codegen/rpc_method.h
+        include/grpcpp/impl/codegen/rpc_service_method.h
+        include/grpcpp/impl/codegen/security/auth_context.h
+        include/grpcpp/impl/codegen/serialization_traits.h
+        include/grpcpp/impl/codegen/server_context.h
+        include/grpcpp/impl/codegen/server_interface.h
+        include/grpcpp/impl/codegen/service_type.h
+        include/grpcpp/impl/codegen/slice.h
+        include/grpcpp/impl/codegen/status.h
+        include/grpcpp/impl/codegen/status_code_enum.h
+        include/grpcpp/impl/codegen/string_ref.h
+        include/grpcpp/impl/codegen/stub_options.h
+        include/grpcpp/impl/codegen/sync_stream.h
+        include/grpcpp/impl/codegen/time.h
+        include/grpc++/impl/codegen/proto_utils.h
+        include/grpcpp/impl/codegen/proto_utils.h
+        include/grpc++/impl/codegen/config_protobuf.h
+        include/grpcpp/impl/codegen/config_protobuf.h
+)
 add_library(gpr
+        ${myHeaders}
   src/core/lib/gpr/alloc.cc
   src/core/lib/gpr/arena.cc
   src/core/lib/gpr/atm.cc
@@ -906,6 +1113,7 @@ target_link_libraries(gpr_test_util
 endif (gRPC_BUILD_TESTS)
 
 add_library(grpc
+        ${myHeaders}
   src/core/lib/surface/init.cc
   src/core/lib/avl/avl.cc
   src/core/lib/backoff/backoff.cc
@@ -1301,6 +1509,7 @@ endif()
 
 
 add_library(grpc_cronet
+        ${myHeaders}
   src/core/lib/surface/init.cc
   src/core/lib/avl/avl.cc
   src/core/lib/backoff/backoff.cc
@@ -2271,6 +2480,7 @@ endforeach()
 endif (gRPC_BUILD_TESTS)
 
 add_library(grpc_unsecure
+        ${myHeaders}
   src/core/lib/surface/init.cc
   src/core/lib/surface/init_unsecure.cc
   src/core/lib/avl/avl.cc
@@ -2678,6 +2888,7 @@ target_link_libraries(test_tcp_server
 endif (gRPC_BUILD_TESTS)
 
 add_library(grpc++
+        ${myHeaders}
   src/cpp/client/insecure_credentials.cc
   src/cpp/client/secure_credentials.cc
   src/cpp/common/auth_property_iterator.cc
@@ -2983,6 +3194,7 @@ if (gRPC_BUILD_TESTS)
 
 if (gRPC_BUILD_CODEGEN)
 add_library(grpc++_core_stats
+        ${myHeaders}
   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/core/stats.pb.cc
   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/core/stats.grpc.pb.cc
   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/core/stats.pb.h
@@ -3033,6 +3245,7 @@ endif (gRPC_BUILD_CODEGEN)
 endif (gRPC_BUILD_TESTS)
 
 add_library(grpc++_cronet
+        ${myHeaders}
   src/cpp/client/cronet_credentials.cc
   src/cpp/client/insecure_credentials.cc
   src/cpp/common/insecure_create_auth_context.cc
@@ -3540,6 +3753,7 @@ endif()
 
 if (gRPC_BUILD_CODEGEN)
 add_library(grpc++_error_details
+        ${myHeaders}
   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/status/status.pb.cc
   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/status/status.grpc.pb.cc
   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/status/status.pb.h
@@ -3607,6 +3821,7 @@ if (gRPC_BUILD_TESTS)
 
 if (gRPC_BUILD_CODEGEN)
 add_library(grpc++_proto_reflection_desc_db
+        ${myHeaders}
   test/cpp/util/proto_reflection_descriptor_database.cc
   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/reflection/v1alpha/reflection.pb.cc
   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/reflection/v1alpha/reflection.grpc.pb.cc
@@ -3669,6 +3884,7 @@ endif (gRPC_BUILD_TESTS)
 
 if (gRPC_BUILD_CODEGEN)
 add_library(grpc++_reflection
+        ${myHeaders}
   src/cpp/ext/proto_server_reflection.cc
   src/cpp/ext/proto_server_reflection_plugin.cc
   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/reflection/v1alpha/reflection.pb.cc
@@ -4133,6 +4349,7 @@ endif (gRPC_BUILD_CODEGEN)
 endif (gRPC_BUILD_TESTS)
 
 add_library(grpc++_unsecure
+        ${myHeaders}
   src/cpp/client/insecure_credentials.cc
   src/cpp/common/insecure_create_auth_context.cc
   src/cpp/server/insecure_server_credentials.cc
