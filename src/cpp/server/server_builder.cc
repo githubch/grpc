@@ -30,7 +30,7 @@
 namespace grpc {
 
 static std::vector<std::unique_ptr<ServerBuilderPlugin> (*)()>*
-    g_plugin_factory_list;
+    g_plugin_factory_list; // TODO hcheng vector elements are functions, which return unique_ptr<> and the input params are void
 static gpr_once once_init_plugin_list = GPR_ONCE_INIT;
 
 static void do_plugin_list_init(void) {
@@ -45,7 +45,7 @@ ServerBuilder::ServerBuilder()
       resource_quota_(nullptr),
       generic_service_(nullptr) {
   gpr_once_init(&once_init_plugin_list, do_plugin_list_init);
-  for (auto it = g_plugin_factory_list->begin();
+  for (auto it = g_plugin_factory_list->begin(); // TODO hcheng cannot understand why need for loop here? g_plugin_factory_list always are empty here
        it != g_plugin_factory_list->end(); it++) {
     auto& factory = *it;
     plugins_.emplace_back(factory());
