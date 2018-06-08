@@ -75,15 +75,17 @@ void grpc_http_filters_init(void) {
   grpc_channel_init_register_stage(GRPC_SERVER_CHANNEL,
                                    GRPC_CHANNEL_INIT_BUILTIN_PRIORITY,
                                    maybe_add_optional_filter, &compress_filter);
-  grpc_channel_init_register_stage(
-      GRPC_CLIENT_SUBCHANNEL, GRPC_CHANNEL_INIT_BUILTIN_PRIORITY,
-      maybe_add_required_filter, (void*)&grpc_http_client_filter);
-  grpc_channel_init_register_stage(
-      GRPC_CLIENT_DIRECT_CHANNEL, GRPC_CHANNEL_INIT_BUILTIN_PRIORITY,
-      maybe_add_required_filter, (void*)&grpc_http_client_filter);
-  grpc_channel_init_register_stage(
-      GRPC_SERVER_CHANNEL, GRPC_CHANNEL_INIT_BUILTIN_PRIORITY,
-      maybe_add_required_filter, (void*)&grpc_http_server_filter);
+
+
+  grpc_channel_init_register_stage(GRPC_CLIENT_SUBCHANNEL,
+                                   GRPC_CHANNEL_INIT_BUILTIN_PRIORITY,
+                                   maybe_add_required_filter, (void*)&grpc_http_client_filter);
+  grpc_channel_init_register_stage(GRPC_CLIENT_DIRECT_CHANNEL,
+                                   GRPC_CHANNEL_INIT_BUILTIN_PRIORITY,
+                                   maybe_add_required_filter, (void*)&grpc_http_client_filter);
+  grpc_channel_init_register_stage(GRPC_SERVER_CHANNEL,
+                                   GRPC_CHANNEL_INIT_BUILTIN_PRIORITY,
+                                   maybe_add_required_filter, (void*)&grpc_http_server_filter);
 }
 
 void grpc_http_filters_shutdown(void) {}

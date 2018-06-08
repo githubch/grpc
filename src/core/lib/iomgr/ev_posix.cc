@@ -267,7 +267,7 @@ void grpc_pollset_add_fd(grpc_pollset* pollset, struct grpc_fd* fd) {
 void pollset_global_init() {}
 void pollset_global_shutdown() {}
 
-grpc_pollset_vtable grpc_posix_pollset_vtable = {
+grpc_pollset_vtable  = {
     pollset_global_init, pollset_global_shutdown,
     pollset_init,        pollset_shutdown,
     pollset_destroy,     pollset_work,

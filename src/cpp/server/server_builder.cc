@@ -255,6 +255,7 @@ std::unique_ptr<Server> ServerBuilder::BuildAndStart() {
 
     // Create completion queues to listen to incoming rpc requests
     for (int i = 0; i < sync_server_settings_.num_cqs; i++) {
+      //TODO hcheng : ServerCompletionQueue->CompletionQueue->private GrpcLibraryCodegen
       sync_server_cqs->emplace_back(new ServerCompletionQueue(polling_type));
     }
   }

@@ -35,7 +35,7 @@
 static int override_fork_support_enabled = -1;
 static int fork_support_enabled;
 
-void grpc_fork_support_init() {
+void grpc_fork_support_init() { // TODO hcheng  set the feature-toggle about for_support_enabled via env variable or set explicitely
 #ifdef GRPC_ENABLE_FORK_SUPPORT
   fork_support_enabled = 1;
 #else

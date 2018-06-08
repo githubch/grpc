@@ -56,6 +56,7 @@
 
 /* (generated) built in registry of plugins */
 extern void grpc_register_built_in_plugins(void);
+// TODO hcheng there are 3 implementation about it, but which is the exactly one???
 
 #define MAX_PLUGINS 128
 
